@@ -8,6 +8,9 @@ document.onkeydown = function() {
   if (event.keyCode === escape) {
     active.blur();
   }
+  if (event.keyCode === 187) {
+    active.click();
+  }
 }
 
 var move = 100;
@@ -26,6 +29,12 @@ function pageMove() {
       break;
     case "L":
       history.forward();
+      break;
+    case "I":
+      chrome.runtime.sendMessage({"tabmove":"prev"}, function(response) {});
+      break;
+    case "O":
+      chrome.runtime.sendMessage({"tabmove":"next"}, function(response) {});
       break;
   }
 }
