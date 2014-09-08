@@ -28,6 +28,21 @@ var action = {
     }
   },
 
+  focusInput: (function() {
+    var index = 0;
+    return function() {
+      var inputTags = document.querySelectorAll("input");
+      inputTags = textBoxes(inputTags);
+      if (inputTags) {
+        inputTags[index].focus();
+        index++;
+        if (index >= inputTags.length) {
+          index = 0;
+        }
+      }
+    }
+  })(),
+
   focusNext: function() {
     var aTags = objectToArray(document.querySelectorAll("a"));
     var active = document.activeElement;
@@ -77,4 +92,14 @@ function objectToArray(object) {
     array[i] = object[i];
   }
   return array;
+}
+
+function textBoxes(inputTags) {
+  var ret = [];
+  for (var i = 0; i < inputTags.length; i++) {
+    if (inputTags[i].type === "text") {
+      ret.push(inputTags[i]);
+    }
+  }
+  return ret;
 }
