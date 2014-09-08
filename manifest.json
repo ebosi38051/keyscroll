@@ -2,22 +2,18 @@
   "name": "Google Search Number",
   "version": "0.1",
   "manifest_version": 2,
-  "background": {
-    "scripts": ["tabmove.js"],
-    "persistent": false
-  },
   "content_scripts": [
     {
       "js": [
+        "config.js",
+        "action.js",
         "main.js"
       ],
       "matches": [
         "http://*/*",
         "https://*/*"
-      ]
+      ],
+      "run_at": "document_idle"
     }
-  ],
-  "permissions": [
-    "tabs"
   ]
 }
