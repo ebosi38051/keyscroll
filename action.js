@@ -28,20 +28,15 @@ var action = {
     }
   },
 
-  focusInput: (function() {
-    var index = 0;
-    return function() {
-      var inputTags = document.querySelectorAll("input");
-      inputTags = textBoxes(inputTags);
-      if (inputTags) {
-        inputTags[index].focus();
-        index++;
-        if (index >= inputTags.length) {
-          index = 0;
-        }
-      }
+  focusInput: function() {
+    var inputTags = objectToArray(document.querySelectorAll("input"));
+    if (inputTags) {
+      inputTags = inputTags.filter(function(a) {
+        return a.type === "text";
+      });
+      inputTags[0].focus();
     }
-  })(),
+  },
 
   focusNext: function() {
     var aTags = objectToArray(document.querySelectorAll("a"));
@@ -65,11 +60,16 @@ var action = {
     var active = document.activeElement;
     if (active.tagName === "BODY" || active.tagName === "A") {
       var aTags = objectToArray(document.querySelectorAll("a"));
-      aTags.sort(function(a, b) {
+      var aTag = aTags.reduce(function(a, b) {
         var distA = distance(a, basis);
         var distB = distance(b, basis);
-        return distA-distB;
-      })[0].focus();
+        if (distA > distB) {
+          return b;
+        } else {
+          return a;
+        }
+      });
+      aTag.focus();
     }
   },
 
@@ -92,14 +92,4 @@ function objectToArray(object) {
     array[i] = object[i];
   }
   return array;
-}
-
-function textBoxes(inputTags) {
-  var ret = [];
-  for (var i = 0; i < inputTags.length; i++) {
-    if (inputTags[i].type === "text") {
-      ret.push(inputTags[i]);
-    }
-  }
-  return ret;
 }
