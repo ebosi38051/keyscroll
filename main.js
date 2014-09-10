@@ -22,7 +22,6 @@ function keyAction() {
 }
 
 function getKeyNamefromCharCode(keyCode) {
-  console.log(keyCode)
   if (event.keyCode >= 48 && event.keyCode <= 90) {
     return String.fromCharCode(keyCode);
   } else {
