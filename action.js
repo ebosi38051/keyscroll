@@ -29,6 +29,10 @@ var action = {
   },
 
   focusInput: function() {
+    var active = document.activeElement;
+    if (active.tagName !== "BODY") {
+      return;
+    }
     var inputTags = objectToArray(document.querySelectorAll("input"));
     if (inputTags) {
       inputTags = inputTags.filter(function(a) {

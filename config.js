@@ -7,7 +7,7 @@ var config = {
     ["Z", "X", "C", "V"]
   ],
   "keyAction": {
-    "I": "focusInput",
+    "/": "focusInput",
     "J": "pageDown",
     "K": "pageUp",
     "H": "pageLeft",
