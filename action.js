@@ -33,9 +33,9 @@ var action = {
     if (active.tagName !== "BODY") {
       return;
     }
-    var inputTags = objectToArray(document.querySelectorAll("input"));
+    var inputTags = document.getElementsByTagName("input");
     if (inputTags) {
-      inputTags = inputTags.filter(function(a) {
+      inputTags = Array.prototype.filter.call(inputTags, function(a) {
         return a.type === "text";
       });
       inputTags[0].focus();
@@ -43,27 +43,33 @@ var action = {
   },
 
   focusNext: function() {
-    var aTags = objectToArray(document.querySelectorAll("a"));
+    var aTags = objectToArray(document.getElementsByTagName("a"));
     var active = document.activeElement;
     if (active.tagName === "A") {
       var index = aTags.indexOf(active);
+      aTags[index].style.outline = "none";
+      aTags[index+1].style.outline = "2px aqua solid";
       aTags[index+1].focus();
+      console.log(aTags[index-1]);
     }
   },
 
   focusPrev: function() {
-    var aTags = objectToArray(document.querySelectorAll("a"));
+    var aTags = objectToArray(document.getElementsByTagName("a"));
     var active = document.activeElement;
     if (active.tagName === "A") {
       var index = aTags.indexOf(active);
+      aTags[index].style.outline = "none";
+      aTags[index-1].style.outline = "2px aqua solid";
       aTags[index-1].focus();
+      console.log(aTags[index-1]);
     }
   },
 
   focusOn: function(basis) {
     var active = document.activeElement;
     if (active.tagName === "BODY" || active.tagName === "A") {
-      var aTags = objectToArray(document.querySelectorAll("a"));
+      var aTags = objectToArray(document.getElementsByTagName("a"));
       var aTag = aTags.reduce(function(a, b) {
         var distA = distance(a, basis);
         var distB = distance(b, basis);
@@ -73,12 +79,15 @@ var action = {
           return a;
         }
       });
+      active.style.outline = "none";
+      aTag.style.outline = "2px aqua solid";
       aTag.focus();
     }
   },
 
   blur: function() {
     var active = document.activeElement;
+    active.style.outline = "none";
     active.blur();
   }
 };
